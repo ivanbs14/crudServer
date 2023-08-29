@@ -1,6 +1,8 @@
 import { mongoose } from 'mongoose';
 
-const repositorySchema = new mongoose.Schema(
+const { Schema, ObjectId } = mongoose;
+
+const repositorySchema = new Schema(
     {
         name: {
             type: String,
@@ -12,8 +14,9 @@ const repositorySchema = new mongoose.Schema(
             unique: true
         },
         userId: {
-            type: String,
-            required: true,
+            type: ObjectId,
+            ref: 'User',
+            required: true
         }
     },
     {

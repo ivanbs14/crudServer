@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import Repository from "../models/Repository.js"
 import { createPasswordHash } from "../services/auth.js";
 
 class UsersController {
@@ -19,7 +20,7 @@ class UsersController {
             const user = await User.findById(id);
 
             if(!user) {
-                return res.status(404).json();
+                return res.status(404).json({ message: 'User not found.' });
             }
 
             return res.json(user);
@@ -75,14 +76,15 @@ class UsersController {
     async deleteUser(req, res) {
         try {
             const { id } = req.params;
-            const user = await User.findById(id);
+            const deletedUser = await User.findByIdAndDelete( id );
 
-            if(!user) {
-                return res.status(404).json();
+            if(!deletedUser) {
+                return res.status(404).json({ message: 'User not found.' });
             }
 
-            await user.deleteOne();
-            return res.status(200).json();
+            await Repository.deleteMany({ userId: id });
+
+            return res.json({ message: 'User and associated repositories deleted successfully.' });
         } catch (error) {
             console.log(error);
             return res.status(500).json({ error: "Internal server error."})

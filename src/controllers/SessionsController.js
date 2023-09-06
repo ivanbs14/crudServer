@@ -1,9 +1,10 @@
 import jwt from "jsonwebtoken";
 
 import User from "../models/User.js"
-import { checkPassword } from "../services/auth.js";
+/* import { checkPassword } from "../services/auth.js"; */
 
 import authConfig from "../config/auth.js"
+import bcrypt from 'bcryptjs';
 
 class SessionController {
     async create(req, res) {
@@ -15,7 +16,9 @@ class SessionController {
             return res.status(401).json({ error: 'User / password invalid.'});
         }
 
-        if (!checkPassword(user, password)) {
+        const passwordMatched = await bcrypt.compare(password, user.password)
+
+        if (!passwordMatched) {
             return res.status(401).json({ error: 'User / Password invalid.'})
         }
 

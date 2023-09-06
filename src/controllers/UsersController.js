@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import Repository from "../models/Repository.js"
 import { createPasswordHash } from "../services/auth.js";
+import bcrypt from 'bcryptjs';
 
 class UsersController {
     async indexUser(req, res) {
@@ -39,7 +40,7 @@ class UsersController {
             }
 
             // cryptograf password
-            const encryptedPassword = await createPasswordHash(password);
+            const encryptedPassword = await bcrypt.hash(password, 8);
     
             const newUser = await User.create({ 
                 email, 

@@ -1,5 +1,5 @@
 import express from 'express';
-import cors from 'express';
+import cors from 'cors';
 
 import routes from './routes.js';
 import "./database/index.js";
@@ -13,7 +13,13 @@ class App {
 
     middlewares() {
         this.server.use(express.json());
-        this.server.use(cors());
+        this.server.use(
+            cors({
+              origin: 'http://localhost:5173',
+              methods: 'GET, POST, PUT, DELETE',
+              allowedHeaders: 'Content-Type, Authorization',
+            })
+        );
     };
 
     routes() {

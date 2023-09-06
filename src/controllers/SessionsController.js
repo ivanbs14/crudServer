@@ -15,7 +15,7 @@ class SessionController {
             return res.status(401).json({ error: 'User / password invalid.'});
         }
 
-        if (!checkPassword) {
+        if (!checkPassword(user, password)) {
             return res.status(401).json({ error: 'User / Password invalid.'})
         }
 

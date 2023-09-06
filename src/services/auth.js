@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 
+/* Create password */
 export const createPasswordHash = async (password) => {
     try {
         const hash = await bcrypt.hash(password, 8);
@@ -9,4 +10,5 @@ export const createPasswordHash = async (password) => {
     }
 }
 
+/* checking password */
 export const checkPassword = (user, password) => bcrypt.compare(password, user.password);

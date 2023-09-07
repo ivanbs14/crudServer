@@ -17,7 +17,7 @@ class UsersController {
 
     async getUser(req, res) {
         try {
-            const { id } = req.params;
+            const id = req.userId;
             const user = await User.findById(id);
 
             if(!user) {
@@ -55,7 +55,7 @@ class UsersController {
     
     async putUser(req, res) {
         try {
-            const { id } = req.params;
+            const id = req.userId;
             const { email, password } = req.body;
 
             const user = await User.findById(id); 
@@ -76,7 +76,7 @@ class UsersController {
 
     async deleteUser(req, res) {
         try {
-            const { id } = req.params;
+            const id = req.userId;
             const deletedUser = await User.findByIdAndDelete( id );
 
             if(!deletedUser) {
